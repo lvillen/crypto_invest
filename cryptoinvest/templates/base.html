@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoInvest - {% block title %}{% endblock %}</title>
+</head>
+<body>
+    <div class="wrapper">
+        <nav class="navbar">
+            <ul class="navbar-list">
+                <li class="navbar-item">Inicio</li>
+                <li class="navbar-item">Compra</li>
+                <li class="navbar-item">Estado</li>
+            </ul>
+        </nav>
+        <header class="header">
+            <h1>CryptoInvest</h1>
+        </header>
+        <main class="main">
+            <section class="section">
+                {% block content %}{% endblock %}
+            </section>
+
+        </main>
+    </div>
+    <footer class="footer">
+        &copy; 2021 - Luis Villén
+    </footer>
+</body>
+</html>
