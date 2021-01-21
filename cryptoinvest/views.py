@@ -9,3 +9,9 @@ def movements():
     #TODO el acceso a los movimientos
 
     return render_template('index.html')
+
+@app.route('/buy')
+def buy():
+    #TODO lógica operacional
+
+    return render_template('buy.html')

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Compra{% endblock %}
+
+{% block content %}
+
+<form action="/compra" method="post">
+    <div class="field">
+        <label for="from-coin">Elija una moneda:</label>
+        <select name="from-coin" id="from-coin"> 
+            <option value="EUR">EUR</option>
+            <option value="ETH">ETH</option>
+            <option value="LTC">LTC</option>
+            <option value="BNB">BNB</option>
+            <option value="EOS">EOS</option>
+            <option value="XLM">XLM</option>
+            <option value="TRX">TRX</option>
+            <option value="BTC">BTC</option>
+            <option value="XRP">XRP</option>
+            <option value="BCH">BCH</option>
+            <option value="USDT">USDT</option>
+            <option value="BSV">BSV</option>
+            <option value="ADA">ADA</option>
+        </select>
+    </div>
+    <div class="field">
+        <label for="quantity">Cantidad:</label>
+        <input type="number" name="quantity" id="quantity">
+    </div>
+    <div class="to-coin">
+        <label for="to-coin">Elija una moneda:</label>
+        <select name="to-coin" id="to-coin"> 
+            <option value="EUR">EUR</option>
+            <option value="ETH">ETH</option>
+            <option value="LTC">LTC</option>
+            <option value="BNB">BNB</option>
+            <option value="EOS">EOS</option>
+            <option value="XLM">XLM</option>
+            <option value="TRX">TRX</option>
+            <option value="BTC">BTC</option>
+            <option value="XRP">XRP</option>
+            <option value="BCH">BCH</option>
+            <option value="USDT">USDT</option>
+            <option value="BSV">BSV</option>
+            <option value="ADA">ADA</option>
+        </select>
+    </div>
+    <div class="field">
+        <label for="accept">Check</label>
+        <button>Submit</button>
+    </div>
+    <!-- TODO Botón calculadora == Cantidad / P. U. -->
+</form>
+
+{% endblock %}
