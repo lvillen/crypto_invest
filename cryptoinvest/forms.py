@@ -1,15 +1,14 @@
 from flask_wtf import FlaskForm
-from wtforms import FloatField, SubmitField, SelectField #TODO más
-from wtforms.validators import DataRequired, #TODO los demás
-
-monedas = ('EUR', 'ETH', 'LTC', 'BNB', 'EOS', 'XLM', 'TRX', 'BTC', 'XRP', 'BCH', 'USDT', 'BSV', 'ADA')
+from wtforms import FloatField, SubmitField, SelectField 
+from wtforms.validators import DataRequired
+from cryptoinvest.data.cryptos import *
 
 class PurchaseForm(FlaskForm):
-
-    from_currency = SelectField('Moneda', choices=monedas, validators=[DataRequired()]) 
-    from_quantity = FloatField('Cantidad', validators=[DataRequired()])
-    to_currency = SelectField('Moneda', choices=monedas, validators=[DataRequired()])
-    to_quantity = FloatField('Cantidad', validators=[DataRequired()])
+    from_currency = SelectField('FromMoneda', choices=cryptos_disponibles(), validators=[DataRequired()]) 
+    from_quantity = FloatField('FromCantidad', validators=[DataRequired()])
+    to_currency = SelectField('ToMoneda', choices=cryptos(), validators=[DataRequired()])
+    to_quantity = FloatField('ToCantidad', validators=[DataRequired()])
+    price_unit = FloatField('Precio por unidad', validators=[DataRequired()])
 
     calculate = SubmitField('Calcular')
     submit = SubmitField('Aceptar')

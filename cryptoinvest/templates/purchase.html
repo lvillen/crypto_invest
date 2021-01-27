@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Compra{% endblock %}
+
+{% block content %}
+
+<form action="/compra" method="post">
+    <div class="field">
+        {{ form.from_currency.label}}
+        {{ form.from_currency(type="select")}}
+    </div>
+    <div class="field">
+        {{ form.from_quantity.label}}
+        {{ form.from_quantity(type="number")}}
+    </div>
+    <div class="field">
+        {{ form.to_currency.label}}
+        {{ form.to_currency(type="select")}}
+    </div>
+    <div class="field">
+        {{ form.calculate.label}}
+        {{ form.calculate(type="submit")}}
+    </div>
+    <div class="field">
+        {{ form.to_quantity.label}}
+        {{ form.to_quantity(type="number")}}
+    </div>
+    <div class="field">
+        {{ form.price_unit.label}}
+        {{ form.price_unit(type="number")}}
+    </div>
+    <div class="field">
+        {{ form.submit.label}}
+        {{ form.submit(type="submit")}}
+    </div>
+
+</form>
+
+{% endblock %}

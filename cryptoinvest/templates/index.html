@@ -4,6 +4,7 @@
 
 {% block content %}
 <section class="table-sec">
+    {% if datos|length > 0 %}
     <table class="table">
         <thead>
             <tr>
@@ -17,16 +18,21 @@
             </tr>
         </thead>
         <tbody>
+            {% for registro in datos %}
             <tr>
-                <td>Testing</td>
-                <td>Testing</td>
-                <td>Testing</td>
-                <td>Testing</td>
-                <td>Testing</td>
-                <td>Testing</td>
-                <td>Testing</td>
+                <td>{{registro['date']}}</td>
+                <td>{{registro['time']}}</td>
+                <td>{{registro['from_currency']}}</td>
+                <td>{{registro['from_quantity']}}</td>
+                <td>{{registro['to_currency']}}</td>
+                <td>{{registro['to_quantity']}}</td>
+                <td>{{registro['from_quantity']/registro['to_quantity']}}</td>
             </tr>
+            {% endfor %}
         </tbody>
     </table>
+    {% else %}
+    <p>No hay movimientos.</p>
+    {% endif %}
 </section>
 {% endblock %}

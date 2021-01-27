@@ -1,0 +1,1 @@
+{"status": {"timestamp": "2021-01-26T17:59:14.010Z", "error_code": 0, "error_message": null, "elapsed": 24, "credit_count": 1, "notice": null}, "data": {"id": 1, "symbol": "BTC", "name": "Bitcoin", "amount": 1, "last_updated": "2021-01-26T17:58:02.000Z", "quote": {"EUR": {"price": 26481.00832564719, "last_updated": "2021-01-26T17:59:04.000Z"}}}}
