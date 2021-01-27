@@ -12,7 +12,7 @@ def movements():
     return render_template('index.html', datos=get_movements())
 
 @app.route('/purchase', methods=['GET', 'POST'])
-def buy():
+def purchase():
     form = PurchaseForm(request.form)
 
     #LLAMADA A BASE DE DATOS
@@ -60,4 +60,6 @@ def buy():
         Bucle [qué monedas]
             Bucle [de cada moneda, qué cantidad] > Convertir a €
         total moneda += cantidad
+
+    return render_template('status.html', datos=status())
 '''

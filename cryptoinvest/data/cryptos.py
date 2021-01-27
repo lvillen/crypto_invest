@@ -15,3 +15,11 @@ def cryptos_disponibles():
 
 def cryptos():
     return consulta('SELECT crypto FROM cryptos;')
+
+'''
+def introducecryptos():
+    INSERT INTO cryptos
+        BLABLABLA
+
+PD: Quizá deba ir en el initdb
+'''
