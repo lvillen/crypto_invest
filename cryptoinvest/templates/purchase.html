@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<form action="/compra" method="post">
+<form action="/purchase" method="post">
     <div class="field">
         {{ form.from_currency.label}}
         {{ form.from_currency(type="select")}}
@@ -23,7 +23,11 @@
     </div>
     <div class="field">
         {{ form.to_quantity.label}}
-        {{ form.to_quantity(type="number")}}
+        {{ form.to_quantity(type="number", value=to_quantity)}}
+        <!-- 
+        Buscar propiedad disabled 
+        -->
+
     </div>
     <div class="field">
         {{ form.price_unit.label}}

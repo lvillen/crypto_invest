@@ -4,6 +4,7 @@ from flask import render_template, request, url_for, redirect
 import sqlite3
 from cryptoinvest.data.movements import *
 import datetime
+from cryptoinvest.coinmarketcap_api.api_functions import *
 
 DBFILE = app.config['DBFILE']
 
@@ -14,22 +15,28 @@ def movements():
 @app.route('/purchase', methods=['GET', 'POST'])
 def purchase():
     form = PurchaseForm(request.form)
+    to_quantity = ""
 
     #LLAMADA A BASE DE DATOS
     
-    '''
-    HACER UN GET
-    HACER UN POST PARA CALCULATE
-    CAPAR LA POSIBILIDAD DE TOCAR NADA
-    HACER OTRO POST PARA QUE SE GRABE LA OPERACIÓN
+    # '''
+    # LEER LA BASE DE DATOS
+    # HACER UN POST PARA CALCULATE
+    # CAPAR LA POSIBILIDAD DE TOCAR NADA
+    # HACER OTRO POST PARA QUE SE GRABE LA OPERACIÓN
 
-    No limitar la vista, validación vía Python
-    '''
+    # No limitar la vista, validación vía Python
+    # '''
 
-    if request.method == 'POST':
+    if request.method == 'POST' and request.form.get('calculate'):
+        to_quantity = conversion(request.form.get('from_quantity'), request.form.get('from_currency'), request.form.get('to_currency'))
+        
+    else:
+        print('Non operazzione')
+
+        '''
         if form.validate():
             pass
-            '''
             consulta('INSERT INTO movements (date, time, from_currency, from_quantity, to_currency, to_quantity) VALUES (?, ?, ?, ?, ?, ?);',
             (
                 datetime.strftime(),
@@ -38,12 +45,11 @@ def purchase():
                 ,
                 ,
                 ,
-            ))
-            '''
+            ))    
         else:
             pass
-
-    return render_template('purchase.html', form=form)
+        '''
+    return render_template('purchase.html', form=form, to_quantity=to_quantity)
 
 ''' 
 @app.route('/status')

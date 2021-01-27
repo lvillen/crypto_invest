@@ -14,8 +14,15 @@ def cryptos_disponibles():
     '''
 
 def cryptos():
-    return consulta('SELECT crypto FROM cryptos;')
+    cryptos = consulta('SELECT crypto FROM cryptos;')
+    
+    result = []
 
+    for dictionary in cryptos:
+        result.append(dictionary['crypto'])
+
+    return result
+    
 '''
 def introducecryptos():
     INSERT INTO cryptos
