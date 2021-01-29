@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import FloatField, SubmitField, SelectField 
+from wtforms import FloatField, SubmitField, SelectField
 from wtforms.validators import DataRequired
 from cryptoinvest.data.cryptos import *
 

@@ -30,3 +30,16 @@ def introducecryptos():
 
 PD: Quizá deba ir en el initdb
 '''
+
+'''
+def wallet():
+    Lista de criptos sin €
+    Dic vacío cryptos
+
+    clave crypto valor saldo
+    
+    Si la cantidad es <= 0:
+        fuera de lista
+    
+    devolver lista
+'''

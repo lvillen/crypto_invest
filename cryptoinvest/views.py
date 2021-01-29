@@ -3,7 +3,7 @@ from cryptoinvest.forms import PurchaseForm
 from flask import render_template, request, url_for, redirect
 import sqlite3
 from cryptoinvest.data.movements import *
-import datetime
+from datetime import datetime
 from cryptoinvest.coinmarketcap_api.api_functions import *
 
 DBFILE = app.config['DBFILE']
@@ -14,42 +14,46 @@ def movements():
 
 @app.route('/purchase', methods=['GET', 'POST'])
 def purchase():
-    form = PurchaseForm(request.form)
+    form = PurchaseForm()
     to_quantity = ""
+    price_unit = ""
+    now = datetime.now()
 
-    #LLAMADA A BASE DE DATOS
-    
-    # '''
-    # LEER LA BASE DE DATOS
-    # HACER UN POST PARA CALCULATE
-    # CAPAR LA POSIBILIDAD DE TOCAR NADA
-    # HACER OTRO POST PARA QUE SE GRABE LA OPERACIÓN
+    if request.method == 'POST':
+        #if form.validate():
+            if form.calculate.data:
+                to_quantity = conversion(form.from_quantity.data, form.from_currency.data, form.to_currency.data) 
+                price_unit = float(form.from_quantity.data) / to_quantity
+            
+            if form.submit.data:
+                if form.from_currency.data != form.to_currency.data:
+                    consulta('INSERT INTO movements (date, time, from_currency, from_quantity, to_currency, to_quantity) VALUES (?, ?, ?, ?, ?, ?);',
+                    (
+                        now.date(),
+                        now.strftime('%H:%M:%S'),
+                        form.from_currency.data,
+                        form.from_quantity.data,
+                        form.to_currency.data,
+                        form.to_quantity.data,
+                    ))    
 
-    # No limitar la vista, validación vía Python
-    # '''
+                    return redirect(url_for('movements'))
 
-    if request.method == 'POST' and request.form.get('calculate'):
-        to_quantity = conversion(request.form.get('from_quantity'), request.form.get('from_currency'), request.form.get('to_currency'))
-        
-    else:
-        print('Non operazzione')
+                else:
+                    print("Algo ha ido mal")
+                    return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit)
 
-        '''
-        if form.validate():
-            pass
-            consulta('INSERT INTO movements (date, time, from_currency, from_quantity, to_currency, to_quantity) VALUES (?, ?, ?, ?, ?, ?);',
-            (
-                datetime.strftime(),
-                datetime.strfdate(),
-                ,
-                ,
-                ,
-                ,
-            ))    
-        else:
-            pass
-        '''
-    return render_template('purchase.html', form=form, to_quantity=to_quantity)
+                #Tengo que volver a meter el form = PurchaseForm(request.form) Ó NO
+
+                #LLAMADA A BASE DE DATOS
+                
+                # LEER LA BASE DE DATOS
+                # CAPAR LA POSIBILIDAD DE TOCAR NADA
+                # HACER OTRO POST PARA QUE SE GRABE LA OPERACIÓN
+
+                # No limitar la vista, validación vía Python
+
+    return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit)
 
 ''' 
 @app.route('/status')

@@ -29,6 +29,8 @@ def conversion(from_quantity, from_currency, to_currency):
         return float(data['data']['quote'][to_currency]['price'])
     else:
         print("La API ha fallado con un error", response.status_code)
+    
+    #Controlar errores 400 / 401 / etc.
             
 
 if __name__ == '__main__':

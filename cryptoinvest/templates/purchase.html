@@ -7,35 +7,31 @@
 <form action="/purchase" method="post">
     <div class="field">
         {{ form.from_currency.label}}
-        {{ form.from_currency(type="select")}}
+        {{ form.from_currency}}
     </div>
     <div class="field">
         {{ form.from_quantity.label}}
-        {{ form.from_quantity(type="number")}}
+        {{ form.from_quantity}}
     </div>
     <div class="field">
         {{ form.to_currency.label}}
-        {{ form.to_currency(type="select")}}
+        {{ form.to_currency}}
     </div>
     <div class="field">
-        {{ form.calculate.label}}
-        {{ form.calculate(type="submit")}}
+        {{ form.calculate}}
     </div>
     <div class="field">
         {{ form.to_quantity.label}}
-        {{ form.to_quantity(type="number", value=to_quantity)}}
-        <!-- 
-        Buscar propiedad disabled 
-        -->
-
+        {{ form.to_quantity(value=to_quantity, disabled="disabled")}}
+        {{ form.to_quantity(value=to_quantity, hidden=True)}}
     </div>
     <div class="field">
         {{ form.price_unit.label}}
-        {{ form.price_unit(type="number")}}
+        {{ form.price_unit(value=price_unit, disabled="disabled")}}
+        {{ form.price_unit(value=price_unit, hidden=True) }}
     </div>
     <div class="field">
-        {{ form.submit.label}}
-        {{ form.submit(type="submit")}}
+        {{ form.submit}}
     </div>
 
 </form>
