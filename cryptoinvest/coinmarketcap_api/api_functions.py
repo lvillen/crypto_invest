@@ -1,7 +1,9 @@
 import requests, json, os
+from cryptoinvest import app
 
 base_url = 'https://pro-api.coinmarketcap.com'
-api_key = os.environ['API_KEY']
+#api_key = os.environ['API_KEY']
+api_key = app.config['API_KEY'] #No puedo lanzar el config sin estar lanzado el Flask run
 
 def listing():
     url = f'{base_url}/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY={api_key}'
