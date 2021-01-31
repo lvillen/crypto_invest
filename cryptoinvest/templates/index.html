@@ -26,7 +26,7 @@
                 <td>{{registro['from_quantity']}}</td>
                 <td>{{registro['to_currency']}}</td>
                 <td>{{registro['to_quantity']}}</td>
-                <td>{{registro['from_quantity']/registro['to_quantity']}}</td>
+                <td>{{'%0.8f'|format(registro['from_quantity']/registro['to_quantity'])}}</td>
             </tr>
             {% endfor %}
         </tbody>

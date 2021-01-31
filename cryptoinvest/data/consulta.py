@@ -7,6 +7,7 @@ def consulta(query, params=()):
     conn = sqlite3.connect(DBFILE)
     c = conn.cursor()
 
+    #c.execute("PRAGMA foreign_keys = ON") ¿Está haciendo algo?
     c.execute(query, params)
     conn.commit()
     filas = c.fetchall()

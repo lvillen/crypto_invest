@@ -22,8 +22,8 @@ def purchase():
     if request.method == 'POST':
         #if form.validate():
             if form.calculate.data:
-                to_quantity = conversion(form.from_quantity.data, form.from_currency.data, form.to_currency.data) 
-                price_unit = float(form.from_quantity.data) / to_quantity
+                to_quantity = round(conversion(form.from_quantity.data, form.from_currency.data, form.to_currency.data), 8)
+                price_unit = round((float(form.from_quantity.data) / to_quantity), 8)
             
             if form.submit.data:
                 if form.from_currency.data != form.to_currency.data:
