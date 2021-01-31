@@ -18,14 +18,16 @@ def purchase():
     to_quantity = ""
     price_unit = ""
     now = datetime.now()
+    validate_1 = form.from_currency.validate(form) and form.from_quantity.validate(form) and form.to_currency.validate(form)
 
     if request.method == 'POST':
-        #if form.validate():
-            if form.calculate.data:
+        if form.calculate.data:
+            if validate_1:
                 to_quantity = round(conversion(form.from_quantity.data, form.from_currency.data, form.to_currency.data), 8)
                 price_unit = round((float(form.from_quantity.data) / to_quantity), 8)
             
-            if form.submit.data:
+        if form.submit.data:
+            if form.validate():
                 if form.from_currency.data != form.to_currency.data:
                     consulta('INSERT INTO movements (date, time, from_currency, from_quantity, to_currency, to_quantity) VALUES (?, ?, ?, ?, ?, ?);',
                     (
@@ -52,6 +54,9 @@ def purchase():
                 # HACER OTRO POST PARA QUE SE GRABE LA OPERACIÓN
 
                 # No limitar la vista, validación vía Python
+        
+            else:
+                print(form.errors)
 
     return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit)
 

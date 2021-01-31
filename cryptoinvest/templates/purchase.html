@@ -6,6 +6,7 @@
 
 
 <form action="/purchase" method="post">
+    {{ form.csrf_token }}
     <div class="field">
         {{ form.from_currency.label}}
         {{ form.from_currency}}

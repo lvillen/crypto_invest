@@ -12,3 +12,6 @@ class PurchaseForm(FlaskForm):
 
     calculate = SubmitField('Calcular')
     submit = SubmitField('Aceptar')
+
+    #Esto debería ir fuera del formulario
+    

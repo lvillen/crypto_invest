@@ -5,7 +5,7 @@ from sqlite3 import Error
 Ejecutarlo una vez antes de montar la app
 '''
 
-DBFILE = 'database.db' #PA MATARME
+DBFILE = 'database.db' 
 #DBFILE = app.config['DBFILE']
 
 create_cryptos_table = 'CREATE TABLE IF NOT EXISTS cryptos (\
