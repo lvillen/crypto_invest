@@ -8,32 +8,60 @@
 <form action="/purchase" method="post">
     {{ form.csrf_token }}
     <div class="field">
-        {{ form.from_currency.label}}
-        {{ form.from_currency}}
+        {% if calculate == False %} 
+            {{ form.from_currency.label}}
+            {{ form.from_currency}}
+        {% else %}
+            {{ form.from_currency.label}}
+            {{ form.from_currency(disabled="disabled")}}
+        {% endif %}
     </div>
     <div class="field">
-        {{ form.from_quantity.label}}
-        {{ form.from_quantity}}
+        {% if calculate == False %} 
+            {{ form.from_quantity.label}}
+            {{ form.from_quantity}}
+        {% else %}
+            {{ form.from_quantity.label}}
+            {{ form.from_quantity(readonly="readonly")}}
+        {% endif %}
     </div>
     <div class="field">
-        {{ form.to_currency.label}}
-        {{ form.to_currency}}
+        {% if calculate == False %} 
+            {{ form.to_currency.label}}
+            {{ form.to_currency}}
+        {% else %}
+            {{ form.to_currency.label}}
+            {{ form.to_currency(disabled="disabled")}}
+        {% endif %}
     </div>
     <div class="field">
         {{ form.calculate}}
     </div>
     <div class="field">
-        {{ form.to_quantity.label}}
-        {{ form.to_quantity(value=to_quantity, disabled="disabled")}}
-        {{ form.to_quantity(value=to_quantity, hidden=True)}}
+        {% if calculate == False %} 
+            {{ form.to_quantity.label}}
+            {{ form.to_quantity(readonly="readonly")}}
+        {% else %}
+                {{ form.to_quantity.label}}
+                {{ form.to_quantity(value=to_quantity, disabled="disabled")}}
+                {{ form.to_quantity(value=to_quantity, hidden=True)}}
+        {% endif %}
     </div>
     <div class="field">
-        {{ form.price_unit.label}}
-        {{ form.price_unit(value=price_unit, disabled="disabled")}}
-        {{ form.price_unit(value=price_unit, hidden=True) }}
+        {% if calculate == False %} 
+            {{ form.price_unit.label}}
+            {{ form.price_unit(readonly="readonly")}}
+        {% else %}
+            {{ form.price_unit.label}}
+            {{ form.price_unit(value=price_unit, disabled="disabled")}}
+            {{ form.price_unit(value=price_unit, hidden=True) }}        
+        {% endif %}
     </div>
     <div class="field">
         {{ form.submit}}
+    </div>
+    <div class="field">
+        {{ form.reset}}
     </div>
 </form>
 
