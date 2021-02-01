@@ -14,15 +14,22 @@ def cryptos_disponibles():
     '''
 
 def cryptos():
-    cryptos = consulta('SELECT crypto FROM cryptos;')
+    cryptos = consulta('SELECT crypto_id, crypto FROM cryptos;')
     
     result = []
 
     for dictionary in cryptos:
-        result.append(dictionary['crypto'])
+        result.append((dictionary['crypto_id'], dictionary['crypto']))
 
     return result
     
+
+def get_crypto(crypto_id):
+    return consulta(f'SELECT crypto FROM cryptos WHERE crypto_id={crypto_id};')
+
+    #A medio montar
+    
+
 '''
 def introducecryptos():
     INSERT INTO cryptos

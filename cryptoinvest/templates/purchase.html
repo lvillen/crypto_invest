@@ -4,65 +4,76 @@
 
 {% block content %}
 
-
-<form action="/purchase" method="post">
+<div class="container ">
+<form action="/purchase" method="post" class="">
     {{ form.csrf_token }}
-    <div class="field">
-        {% if calculate == False %} 
-            {{ form.from_currency.label}}
-            {{ form.from_currency}}
-        {% else %}
-            {{ form.from_currency.label}}
-            {{ form.from_currency(disabled="disabled")}}
-        {% endif %}
-    </div>
-    <div class="field">
-        {% if calculate == False %} 
-            {{ form.from_quantity.label}}
-            {{ form.from_quantity}}
-        {% else %}
-            {{ form.from_quantity.label}}
-            {{ form.from_quantity(readonly="readonly")}}
-        {% endif %}
-    </div>
-    <div class="field">
-        {% if calculate == False %} 
-            {{ form.to_currency.label}}
-            {{ form.to_currency}}
-        {% else %}
-            {{ form.to_currency.label}}
-            {{ form.to_currency(disabled="disabled")}}
-        {% endif %}
-    </div>
-    <div class="field">
-        {{ form.calculate}}
-    </div>
-    <div class="field">
-        {% if calculate == False %} 
-            {{ form.to_quantity.label}}
-            {{ form.to_quantity(readonly="readonly")}}
-        {% else %}
-                {{ form.to_quantity.label}}
-                {{ form.to_quantity(value=to_quantity, disabled="disabled")}}
-                {{ form.to_quantity(value=to_quantity, hidden=True)}}
-        {% endif %}
-    </div>
-    <div class="field">
-        {% if calculate == False %} 
-            {{ form.price_unit.label}}
-            {{ form.price_unit(readonly="readonly")}}
-        {% else %}
-            {{ form.price_unit.label}}
-            {{ form.price_unit(value=price_unit, disabled="disabled")}}
-            {{ form.price_unit(value=price_unit, hidden=True) }}        
-        {% endif %}
-    </div>
-    <div class="field">
-        {{ form.submit}}
-    </div>
-    <div class="field">
-        {{ form.reset}}
+    <div class="columns is-half">
+        <div class="column">
+            <div class="field">
+                {% if calculate == False %} 
+                    {{ form.from_currency.label}}
+                    {{ form.from_currency(class="select")}}
+                {% else %}
+                    {{ form.from_currency.label}}
+                    {{ form.from_currency(class="select")}}
+                    <!-- Aquí tenía un disabled que me peta el formulario -->
+                {% endif %}
+            </div>
+            <div class="field">
+                {% if calculate == False %} 
+                    {{ form.from_quantity.label}}
+                    {{ form.from_quantity (class="input")}}
+                {% else %}
+                    {{ form.from_quantity.label}}
+                    {{ form.from_quantity(class="input", readonly="readonly")}}
+                {% endif %}
+            </div>
+            <div class="field">
+                {% if calculate == False %} 
+                    {{ form.to_currency.label}}
+                    {{ form.to_currency(class="select")}}
+                {% else %}
+                    {{ form.to_currency.label}}
+                    {{ form.to_currency(class="select")}}
+                    <!-- aquí tenía un disabled que me peta el formulario -->
+                {% endif %}
+            </div>
+            <div class="field">
+                {{ form.calculate(class="button")}}
+            </div>
+        </div>
+        <div class="column">
+            <div class="field">
+                {% if calculate == False %} 
+                    {{ form.to_quantity.label}}
+                    {{ form.to_quantity(class="input", readonly="readonly")}}
+                {% else %}
+                        {{ form.to_quantity.label}}
+                        {{ form.to_quantity(class="input", value=to_quantity, readonly="readonly")}}
+                {% endif %}
+            </div>
+            <div class="field">
+                {% if calculate == False %} 
+                    {{ form.price_unit.label}}
+                    {{ form.price_unit(class="input", readonly="readonly")}}
+                {% else %}
+                    {{ form.price_unit.label}}
+                    {{ form.price_unit(class="input", value=price_unit, readonly="readonly")}}
+                {% endif %}
+            </div>
+            <div class="level">
+                <div class="level-left">
+                    <div class="level-item">
+                        {{ form.submit(class="button")}}
+                    </div>
+                    <div class="level-item">
+                        {{ form.reset(class="button")}}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </form>
+</div>
 
 {% endblock %}
