@@ -11,7 +11,13 @@ DBFILE = app.config['DBFILE']
 
 @app.route('/')
 def movements():
-    return render_template('index.html', datos=get_movements())
+    Errors = []
+    try:
+        return render_template('index.html', datos=get_movements())
+    except Error as e:
+        print(e)
+        Errors.append('Esto ha petau')
+        return render_template('index.html', Errors=Errors)
 
 @app.route('/purchase', methods=['GET', 'POST'])
 def purchase():
@@ -19,26 +25,26 @@ def purchase():
     to_quantity = ""
     price_unit = ""
     now = datetime.now()
-    validate_1 = form.from_currency.validate(form) and form.from_quantity.validate(form) and form.to_currency.validate(form)
+    #validate_1 = form.from_currency.validate(form) and form.from_quantity.validate(form) and form.to_currency.validate(form)
     calculate = False
 
     if request.method == 'POST':
         if form.calculate.data:
-            if validate_1:
+            if form.validate():
                 from_currency = get_crypto(form.from_currency.data) 
                 to_currency = get_crypto(form.to_currency.data)
                 to_quantity = round(conversion(form.from_quantity.data, from_currency, to_currency), 8)
                 price_unit = round((float(form.from_quantity.data) / to_quantity), 8)
                 calculate = True
             
-        if form.reset.data:
+        """ if form.reset.data:
             form = PurchaseForm()
             to_quantity = ""
             price_unit = ""
             now = datetime.now()
             validate_1 = form.from_currency.validate(form) and form.from_quantity.validate(form) and form.to_currency.validate(form)
             calculate = False
-            return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate)
+            return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate) """
             
         if form.submit.data:
             if form.validate():
@@ -74,8 +80,14 @@ def purchase():
 
     return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate)
 
-''' 
+
 @app.route('/status')
+def status():
+    print(euros_balance())
+    
+    return render_template('status.html', total_invested=f'{total_invested():.2f}')
+
+''' 
     1: SALDO
         Sumar todo lo gastado en €
         La suma de Cantidad_to de todas los movimientos cuya

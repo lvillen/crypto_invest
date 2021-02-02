@@ -6,13 +6,14 @@ from cryptoinvest.data.cryptos import *
 class PurchaseForm(FlaskForm):
     from_currency = SelectField('FromMoneda', choices=cryptos_disponibles(), validators=[DataRequired()]) 
     from_quantity = FloatField('FromCantidad', validators=[DataRequired()])
+    #Validador personalizado /función o clase/ [DataRequired(), validarsaldo()]
     to_currency = SelectField('ToMoneda', choices=cryptos(), validators=[DataRequired()])
     to_quantity = FloatField('ToCantidad', render_kw={'readonly': True})
     price_unit = FloatField('Precio por unidad', render_kw={'readonly': True})
 
     calculate = SubmitField('Calcular')
     submit = SubmitField('Aceptar')
-    reset = SubmitField('Reset')
+    #reset = SubmitField('Reset')
 
     #Esto debería ir fuera del formulario
     
