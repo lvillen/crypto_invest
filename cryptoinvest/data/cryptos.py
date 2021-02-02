@@ -25,7 +25,8 @@ def cryptos():
     
 
 def get_crypto(crypto_id):
-    return consulta(f'SELECT crypto FROM cryptos WHERE crypto_id={crypto_id};')
+    the_crypto = consulta(f'SELECT crypto FROM cryptos WHERE crypto_id={crypto_id};')
+    return the_crypto[0]['crypto']
 
     #A medio montar
     

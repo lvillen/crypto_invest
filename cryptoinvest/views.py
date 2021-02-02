@@ -25,13 +25,11 @@ def purchase():
     if request.method == 'POST':
         if form.calculate.data:
             if validate_1:
-                # A medio hacer
                 from_currency = get_crypto(form.from_currency.data) 
                 to_currency = get_crypto(form.to_currency.data)
-                to_quantity = round(conversion(form.from_quantity.data, form.from_currency.data, form.to_currency.data), 8)
+                to_quantity = round(conversion(form.from_quantity.data, from_currency, to_currency), 8)
                 price_unit = round((float(form.from_quantity.data) / to_quantity), 8)
                 calculate = True
-                print(calculate)
             
         if form.reset.data:
             form = PurchaseForm()
