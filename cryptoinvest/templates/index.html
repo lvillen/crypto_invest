@@ -4,6 +4,9 @@
 
 {% block content %}
 <section class="column is-full">
+    {% for mensaje in mensajes %}
+        <p class="err-msg">{{ mensaje }}</p>
+    {% endfor %}
     {% if datos|length > 0 %}
     <table class="table has-background-white has-text-info">
         <thead>

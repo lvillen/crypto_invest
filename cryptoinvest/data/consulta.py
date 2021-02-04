@@ -1,8 +1,8 @@
 import sqlite3
 from sqlite3 import Error
+from cryptoinvest import app
 
-DBFILE = 'cryptoinvest/data/database.db'
-#Cogerlo del config
+DBFILE = app.config['DBFILE']
 
 def consulta(query, params=()):
     conn = sqlite3.connect(DBFILE)
