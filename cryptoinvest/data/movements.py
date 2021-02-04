@@ -1,5 +1,6 @@
 from cryptoinvest.data.consulta import consulta
 from cryptoinvest.data.cryptos import cryptos, wallet
+from cryptoinvest.coinmarketcap_api.api_functions import conversion
 
 DBFILE = 'cryptoinvest/data/database.db'
 
@@ -27,33 +28,28 @@ def total_invested():
     return result[0]['total_invested']
 
 def euros_balance():
-    total_invested = consulta('''
-                    SELECT sum(from_quantity) AS total_invested 
-                    FROM movements 
-                    WHERE from_currency = 1;   
-                    ''')
+    balance = consulta('''
+                SELECT SUM(totalF) AS balance
+                FROM (
+                SELECT SUM(to_quantity) as totalF
+                FROM movements
+                WHERE to_currency = 1
+                UNION
+                SELECT SUM(from_quantity)*-1 
+                FROM movements
+                WHERE from_currency = 1);
+            ''')
 
-    total_received = consulta('''
-                    SELECT sum(to_quantity) AS total_received 
-                    FROM movements 
-                    WHERE to_currency = 1;   
-                    ''')
-
-    #Buscar una forma de hacerlo todo en una sentencia
-
-    euros_balance = float(total_received[0]['total_received']) - float(total_invested[0]['total_invested'])
+    return balance[0]['balance']
     
-    return euros_balance
 
 def actual_value():
+    cryptos = wallet()
 
-    Valor actual en euros de nuestras cryptos: 
-    Al existir 10 posibles cryptos debemos
-    BUCLE FOR 
-    • Para cada crypto obtener su total como: 
-    La suma de Cantidad_to de todos los movimientos cuya Moneda_to es la crypto en cuestión - La suma de Cantidad_from de
-    todos los movimientos cuya Moneda_from es la crypto en cuestión
+    actual_value = .0
 
-    • Con esa cantidad utilizamos el endpoint de conversión (Ver registro de movimientos from_to) y convertimos ese total de crypto en euros
+    for crypto in cryptos:
+        euros = conversion(crypto['available'], crypto['name'], 'EUR')
+        actual_value += euros
     
-    • Sumamos los euros de cada una de las cryptos
+    return actual_value
