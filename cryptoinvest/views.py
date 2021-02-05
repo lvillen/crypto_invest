@@ -1,4 +1,4 @@
-from cryptoinvest import app
+from cryptoinvest import application
 from cryptoinvest.forms import PurchaseForm, actual_cryptos
 from flask import render_template, request, url_for, redirect
 import sqlite3
@@ -7,9 +7,9 @@ from cryptoinvest.data.cryptos import *
 from datetime import datetime
 from cryptoinvest.coinmarketcap_api.api_functions import *
 
-DBFILE = app.config['DBFILE']
+DBFILE = application.config['DBFILE']
 
-@app.route('/')
+@application.route('/')
 def movements():
     mensajes = []
     
@@ -25,7 +25,7 @@ def movements():
     return render_template('index.html', datos=datos, mensajes=mensajes)
 
 
-@app.route('/purchase', methods=['GET', 'POST'])
+@application.route('/purchase', methods=['GET', 'POST'])
 def purchase():
     form = PurchaseForm()
     to_quantity = ""
@@ -99,7 +99,7 @@ def purchase():
     return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
 
 
-@app.route('/status')
+@application.route('/status')
 def status():
     mensajes = []
 

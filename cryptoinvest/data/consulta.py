@@ -1,8 +1,8 @@
 import sqlite3
 from sqlite3 import Error
-from cryptoinvest import app
+from cryptoinvest import application
 
-DBFILE = app.config['DBFILE']
+DBFILE = application.config['DBFILE']
 
 def consulta(query, params=()):
     conn = sqlite3.connect(DBFILE)
