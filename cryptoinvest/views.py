@@ -20,19 +20,32 @@ def movements():
         mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
         return render_template('index.html', mensajes=mensajes)
 
-    #Si renombro la base de datos como db1 funciona, pero si lo hago como db_ no
-
     return render_template('index.html', datos=datos, mensajes=mensajes)
 
 
 @application.route('/purchase', methods=['GET', 'POST'])
 def purchase():
-    form = PurchaseForm()
+    mensajes = []
+    try: 
+        form = PurchaseForm()
+        if form == None:
+            #Alternativa a la otra vía (en el formulario)
+
+    #Quizá colarle otro try/except
+        form.from_currency.choices = actual_cryptos()
+
+    except Exception as e:
+                    print('**ERROR**: Acceso a base de datos - relación crypto_id con crypto_name: {} {}'.format(type(e).__name__, e))
+                    mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
+                    return render_template('purchase.html', mensajes=mensajes, form=form)
+
+                    #Mandar a otra url render_template('error.html')
+
     to_quantity = ""
     price_unit = ""
     now = datetime.now()
     calculate = False
-    mensajes = []
+
 
     if request.method == 'POST':
         if form.calculate.data:
@@ -43,14 +56,12 @@ def purchase():
                 except Exception as e:
                     print('**ERROR**: Acceso a base de datos - relación crypto_id con crypto_name: {} {}'.format(type(e).__name__, e))
                     mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
-                    return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
 
                 try:
                     to_quantity = round(conversion(form.from_quantity.data, from_currency, to_currency), 8)
                 except Exception as e:
                     print('**ERROR**: Acceso a API - consulta de conversion: {} {}'.format(type(e).__name__, e))
                     mensajes.append('Error en el acceso a la API. Consulte con el administrador.')
-                    return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
                 
                 try:
                     price_unit = round((float(form.from_quantity.data) / to_quantity), 8)
@@ -59,15 +70,8 @@ def purchase():
                     #Cómo controlarlo | Darle un voltio
                 
                 calculate = True
-            
-        """ if form.reset.data:
-            form = PurchaseForm()
-            to_quantity = ""
-            price_unit = ""
-            now = datetime.now()
-            validate_1 = form.from_currency.validate(form) and form.from_quantity.validate(form) and form.to_currency.validate(form)
-            calculate = False
-            return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate) """
+
+                return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
             
         if form.submit.data:
             if form.validate():
@@ -84,7 +88,9 @@ def purchase():
                         ))    
                         
                         return redirect(url_for('movements'))
+
                     except Exception as e:
+                        
                         print('**ERROR**: Acceso a base de datos - inserción de movimientos: {} {}'.format(type(e).__name__, e))
                         mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
                         return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
@@ -93,8 +99,6 @@ def purchase():
             else:
                 #En realidad quiero que me devuelva el template vacío
                 return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
-
-    form.from_currency.choices = actual_cryptos()
 
     return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
 

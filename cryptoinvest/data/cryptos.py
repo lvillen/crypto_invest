@@ -1,7 +1,10 @@
 from cryptoinvest.data.consulta import consulta
 
 def cryptos():
-    cryptos = consulta('SELECT crypto_id, crypto FROM cryptos;')
+    try:
+        cryptos = consulta('SELECT crypto_id, crypto FROM cryptos;')
+    except:
+        pass
     
     result = []
 
@@ -39,52 +42,3 @@ def wallet():
         crypto['available'] = crypto_amount[0]['total_available']
 
     return wallet
-
-""" 
-def cryptos_disponibles():
-    pocket_money = wallet()
-    print(pocket_money)
-
-    result = []
-
-    for dictionary in pocket_money:
-        if (float(dictionary['available']) > 0):
-            result.append((dictionary['id'], dictionary['name']))
-        
-    result.append(('1', 'EUR'))
-
-    return result 
-
-"""
-
-'''
-cryptos_disponibles = []
-
-for registro in consulta('SELECT from_currency, to_currency FROM movements;'):
-    print(registro)
-    cryptos_disponibles += registro
-
-return cryptos_disponibles
-'''
-
-        
-"""
-    total_bitcoin = float(to_bitcoin[0]['to_bitcoin']) - float(from_bitcoin[0]['from_bitcoin'])
-    
-    
-    
-    wallet = {}
-
-    for id in 
-    clave crypto valor saldo
-    
-    Si la cantidad es <= 0:
-        fuera de lista
-    
-    devolver lista
-
-
-    • Para cada crypto obtener su total como: 
-    La suma de Cantidad_to de todos los movimientos cuya Moneda_to es la crypto en cuestión - La suma de Cantidad_from de
-    todos los movimientos cuya Moneda_from es la crypto en cuestión
-"""

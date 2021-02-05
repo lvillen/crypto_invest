@@ -4,7 +4,12 @@ from wtforms.validators import DataRequired, ValidationError, NumberRange
 from cryptoinvest.data.cryptos import *
 
 def actual_cryptos():
-    actual_wallet = wallet()
+    #Gestionar aquí
+    try:
+        actual_wallet = wallet()
+    except:
+        return (1, 'EUR')
+    
     result = []
     result.append(('1', 'EUR'))
     for dictionary in actual_wallet:
@@ -14,9 +19,12 @@ def actual_cryptos():
     return result
 
 def available_cryptos(form, field):
-    #field.data = from_quantity.data
+    #Gestionar aquí
+    try:
+        available_cr = wallet()
+    except:
+        pass 
     
-    available_cr = wallet()
     currency = form.from_currency.data
 
     for dictionary in available_cr:
@@ -25,7 +33,6 @@ def available_cryptos(form, field):
                 raise ValidationError('No tiene saldo suficiente.')
 
 def not_same_currency(form, field):
-    #field.data = from_quantity.data
     from_currency = form.from_currency.data
 
     if field.data == from_currency:
@@ -41,7 +48,4 @@ class PurchaseForm(FlaskForm):
 
     calculate = SubmitField('Calcular')
     submit = SubmitField('Aceptar')
-    #reset = SubmitField('Reset')
-
-    #Esto debería ir fuera del formulario
-    
+    #reset = SubmitField('Reset')    
