@@ -4,3 +4,10 @@ __pycache__
 .env
 .vscode
 config.py
+PATH
+aws_admin_cred.csv
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+.elasticbeanstalk

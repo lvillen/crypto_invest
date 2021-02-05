@@ -108,21 +108,21 @@ def status():
     except Exception as e:
         print('**ERROR**: Acceso a base de datos - cálculo de € gastados: {} {}'.format(type(e).__name__, e))
         mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
-        return render_template('status.html', total_invested=f'{total_invested():.2f}', actual_value=f'{the_real_value:.2f}', mensajes=mensajes)
+        return render_template('status.html', total_invested='No se pudo mostrar', actual_value='No se pudo mostrar', mensajes=mensajes)
 
     try:    
         the_bal = euros_balance()
     except Exception as e:
         print('**ERROR**: Acceso a base de datos - balance de € invertidos: {} {}'.format(type(e).__name__, e))
         mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
-        return render_template('status.html', total_invested=f'{total_invested():.2f}', actual_value=f'{the_real_value:.2f}', mensajes=mensajes)
+        return render_template('status.html', total_invested='No se pudo mostrar', actual_value='No se pudo mostrar', mensajes=mensajes)
 
     try:
         the_val = actual_value()
     except Exception as e:
         print('**ERROR**: Acceso a API - consulta de conversion: {} {}'.format(type(e).__name__, e))
         mensajes.append('Error en el acceso a la API. Consulte con el administrador.')
-        return render_template('status.html', total_invested=f'{total_invested():.2f}', actual_value=f'{the_real_value:.2f}', mensajes=mensajes)        
+        return render_template('status.html', total_invested='No se pudo mostrar', actual_value='No se pudo mostrar', mensajes=mensajes)        
         
         #Aquí puede petar por dos lados
         #La API ha fallado con un error 429
@@ -134,4 +134,4 @@ def status():
 
 
     
-    return render_template('status.html', total_invested=f'{total_invested():.2f}', actual_value=f'{the_real_value:.2f}', mensajes=mensajes)
+    return render_template('status.html', total_invested=f'{the_inv:.2f} €', actual_value=f'{the_real_value:.2f} €', mensajes=mensajes)
