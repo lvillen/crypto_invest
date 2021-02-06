@@ -3,37 +3,45 @@
 {% block title %}No llevará{% endblock %}
 
 {% block content %}
+<header class="header">
+    <hgroup>
+        <h2>CryptoInvest:</h2>
+        <h3>Vea sus movimientos</h3>
+    <hgroup>
+</header>
 <section class="column is-full">
     {% for mensaje in mensajes %}
         <p class="err-msg">{{ mensaje }}</p>
     {% endfor %}
     {% if datos|length > 0 %}
-    <table class="table has-background-white has-text-info">
-        <thead>
-            <tr>
-                <th class="has-text-black">Fecha</th>
-                <th class="has-text-black">Hora</th>
-                <th class="has-text-black">De</th>
-                <th class="has-text-black">Cantidad</th>
-                <th class="has-text-black">A</th>
-                <th class="has-text-black">Cantidad</th>
-                <th class="has-text-black">P. U.</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for registro in datos %}
-            <tr>
-                <td>{{registro['date']}}</td>
-                <td>{{registro['time']}}</td>
-                <td>{{registro['from_currency']}}</td>
-                <td>{{registro['from_quantity']}}</td>
-                <td>{{registro['to_currency']}}</td>
-                <td>{{registro['to_quantity']}}</td>
-                <td>{{'%0.8f'|format(registro['from_quantity']/registro['to_quantity'])}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <figure>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>De</th>
+                    <th>Cantidad</th>
+                    <th>A</th>
+                    <th>Cantidad</th>
+                    <th>P. U.</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for registro in datos %}
+                <tr>
+                    <td>{{registro['date']}}</td>
+                    <td>{{registro['time']}}</td>
+                    <td>{{registro['from_currency']}}</td>
+                    <td>{{registro['from_quantity']}}</td>
+                    <td>{{registro['to_currency']}}</td>
+                    <td>{{registro['to_quantity']}}</td>
+                    <td>{{'%0.8f'|format(registro['from_quantity']/registro['to_quantity'])}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>   
     {% else %}
     <p>No hay movimientos.</p>
     {% endif %}

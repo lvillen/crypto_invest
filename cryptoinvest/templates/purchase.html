@@ -4,14 +4,20 @@
 
 {% block content %}
 
-<div class="container ">
+<div class="container">
+    <header class="header">
+        <hgroup>
+            <h2>CryptoInvest:</h2>
+            <h3>Adquiera cryptomonedas</h3>
+        <hgroup>
+    </header>
     {% for mensaje in mensajes %}
-        <p class="err-msg" style="color: red;">{{ mensaje }}</p>
+        <p class="err-msg" style="color: #e63946;">{{ mensaje }}</p>
         <br>
     {% endfor %}
 <form action="/purchase" method="post" class="">
     {{ form.csrf_token }}
-    <div class="columns is-half">
+    <div class="grid">
         <div class="column">
             <div class="field">
                 {{ form.from_currency.label}}
@@ -28,7 +34,7 @@
                     {{ form.from_quantity (class="input")}}
                         {% if form.from_quantity.errors %}
                             {% for msg in form.from_quantity.errors %}
-                                <p class="err-msg" style="color: red;">
+                                <p class="err-msg" style="color: #e63946;">
                                     {{msg}}
                                 </p>
                             {% endfor %}
@@ -43,7 +49,7 @@
                     {{ form.to_currency(class="select")}}
                         {% if form.to_currency.errors %}
                             {% for msg in form.to_currency.errors %}
-                                <p class="err-msg" style="color: red;">
+                                <p class="err-msg" style="color: #e63946;">
                                     {{msg}}
                                 </p>
                             {% endfor %}
@@ -59,18 +65,16 @@
         </div>
         <div class="column">
             <div class="field">
-                {{ form.to_quantity.label}}
                 {% if calculate == False %} 
-                    {{ form.to_quantity(class="input", disabled="disabled")}}
                 {% else %}
-                        {{ form.to_quantity(class="input", value=to_quantity)}}
+                    {{ form.to_quantity.label}}
+                    {{ form.to_quantity(class="input", value=to_quantity)}}
                 {% endif %}
             </div>
             <div class="field">
-                {{ form.price_unit.label}}
                 {% if calculate == False %} 
-                    {{ form.price_unit(class="input", disabled="disabled")}}
                 {% else %}
+                    {{ form.price_unit.label}}
                     {{ form.price_unit(class="input", value=price_unit)}}
                 {% endif %}
             </div>
@@ -78,13 +82,17 @@
                 <div class="level-left">
                     <div class="level-item">
                         {% if calculate == False %} 
-                            {{ form.submit(class="button", disabled="disabled")}}
                         {% else %}
                             {{ form.submit(class="button")}}
                         {% endif %}
                     </div>
                     <div class="level-item">
-                        <a class="button" href="/purchase">Reset</a>
+                        {% if calculate == False %} 
+                        {% else %}                        
+                        <form action="/purchase">
+                            <input type="submit" value="Reset"/>
+                        </form>                  
+                        {% endif %}
                     </div>
                 </div>
             </div>

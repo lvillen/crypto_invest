@@ -42,10 +42,10 @@ def not_same_currency(form, field):
 
 
 class PurchaseForm(FlaskForm):
-    from_currency = SelectField('FromMoneda', choices=actual_cryptos(), validators=[DataRequired()]) 
-    from_quantity = FloatField('FromCantidad', validators=[DataRequired('Introduzca un número válido, recuerde que solo puede utilizar números y que los decimales deben ir precedidos de un punto.'), available_cryptos, NumberRange(min=0.00000001, max=1000000000 ,message='Introduzca un número válido.')])
-    to_currency = SelectField('ToMoneda', choices=cryptos(), validators=[DataRequired(), not_same_currency])
-    to_quantity = FloatField('ToCantidad', render_kw={'readonly': True})
+    from_currency = SelectField('De qué moneda', choices=actual_cryptos(), validators=[DataRequired()]) 
+    from_quantity = FloatField('Qué cantidad', validators=[DataRequired('Introduzca un número válido, recuerde que solo puede utilizar números y que los decimales deben ir precedidos de un punto.'), available_cryptos, NumberRange(min=0.00000001, max=1000000000 ,message='Introduzca un número válido.')])
+    to_currency = SelectField('A qué moneda', choices=cryptos(), validators=[DataRequired(), not_same_currency])
+    to_quantity = FloatField('Cantidad recibida', render_kw={'readonly': True})
     price_unit = FloatField('Precio por unidad', render_kw={'readonly': True})
 
     calculate = SubmitField('Calcular')
