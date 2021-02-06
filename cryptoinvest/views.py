@@ -16,7 +16,7 @@ def movements():
     try:
         datos = get_movements()
     except Exception as e:
-        print('**ERROR**: LO QUE SEA QUE HACE / VERLO - get_movements: {} {}'.format(type(e).__name__, e))
+        print('**ERROR**: Error en la base de datos - no se puedo realizar el acceso a la tabla "movements": {} {}'.format(type(e).__name__, e))
         mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
         return render_template('index.html', mensajes=mensajes)
 
@@ -26,79 +26,78 @@ def movements():
 @application.route('/purchase', methods=['GET', 'POST'])
 def purchase():
     mensajes = []
+    
     try: 
         form = PurchaseForm()
-        if form == None:
-            #Alternativa a la otra vía (en el formulario)
-
-    #Quizá colarle otro try/except
         form.from_currency.choices = actual_cryptos()
-
     except Exception as e:
-                    print('**ERROR**: Acceso a base de datos - relación crypto_id con crypto_name: {} {}'.format(type(e).__name__, e))
-                    mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
-                    return render_template('purchase.html', mensajes=mensajes, form=form)
-
-                    #Mandar a otra url render_template('error.html')
-
+                    print('**ERROR**: Acceso a base de datos en la creación del formulario no disponible: {} {}'.format(type(e).__name__, e))
+                    mensajes.append('Debido a un error en el acceso a la base de datos no se pudo crear esta página. Sentimos las molestias.')
+                    return render_template('500.html', mensajes=mensajes)
+    
     to_quantity = ""
     price_unit = ""
     now = datetime.now()
     calculate = False
 
-
     if request.method == 'POST':
         if form.calculate.data:
-            if form.validate():
-                try:
-                    from_currency = get_crypto(form.from_currency.data) 
-                    to_currency = get_crypto(form.to_currency.data)
-                except Exception as e:
-                    print('**ERROR**: Acceso a base de datos - relación crypto_id con crypto_name: {} {}'.format(type(e).__name__, e))
-                    mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
-
-                try:
-                    to_quantity = round(conversion(form.from_quantity.data, from_currency, to_currency), 8)
-                except Exception as e:
-                    print('**ERROR**: Acceso a API - consulta de conversion: {} {}'.format(type(e).__name__, e))
-                    mensajes.append('Error en el acceso a la API. Consulte con el administrador.')
-                
-                try:
-                    price_unit = round((float(form.from_quantity.data) / to_quantity), 8)
-                except:
-                    print("Solo para ver qué ha pasado")
-                    #Cómo controlarlo | Darle un voltio
-                
-                calculate = True
-
-                return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
-            
-        if form.submit.data:
-            if form.validate():
-                if form.from_currency.data != form.to_currency.data:
+            try: 
+                if form.validate():
                     try:
-                        consulta('INSERT INTO movements (date, time, from_currency, from_quantity, to_currency, to_quantity) VALUES (?, ?, ?, ?, ?, ?);',
-                        (
-                            now.date(),
-                            now.strftime('%H:%M:%S'),
-                            form.from_currency.data,
-                            form.from_quantity.data,
-                            form.to_currency.data,
-                            form.to_quantity.data,
-                        ))    
-                        
-                        return redirect(url_for('movements'))
-
+                        from_currency = get_crypto(form.from_currency.data) 
+                        to_currency = get_crypto(form.to_currency.data)
                     except Exception as e:
-                        
-                        print('**ERROR**: Acceso a base de datos - inserción de movimientos: {} {}'.format(type(e).__name__, e))
+                        print('**ERROR**: Acceso a base de datos - relación crypto_id con crypto_name: {} {}'.format(type(e).__name__, e))
                         mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
-                        return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
+                        return render_template('500.html', mensajes=mensajes)
 
-        
-            else:
-                #En realidad quiero que me devuelva el template vacío
-                return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
+                    try:
+                        to_quantity = round(conversion(form.from_quantity.data, from_currency, to_currency), 8)
+                    except Exception as e:
+                        print('**ERROR**: Acceso a API - consulta de conversion: {} {}'.format(type(e).__name__, e))
+                        mensajes.append('Error en el acceso a la API. Consulte con el administrador.')
+                        return render_template('500.html', mensajes=mensajes)
+
+                    try:
+                        price_unit = round((float(form.from_quantity.data) / to_quantity), 8)
+                    except ZeroDivisionError as e:
+                        print('**ERROR**: Divisón no disponible: {} {}'.format(type(e).__name__, e))
+                        mensajes.append('Sentimos mucho decirle que la operación que deseaba realizar no ha podido completarse, vuelva al formulario en el link superior.')
+                        return render_template('500.html', mensajes=mensajes)
+                    
+                    calculate = True
+
+                    return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
+            
+            except Exception as e: 
+                return render_template('500.html', mensajes=mensajes)
+
+        if form.submit.data:
+            try:
+                if form.validate():
+                    if form.from_currency.data != form.to_currency.data:
+                        try:
+                            consulta('INSERT INTO movements (date, time, from_currency, from_quantity, to_currency, to_quantity) VALUES (?, ?, ?, ?, ?, ?);',
+                            (
+                                now.date(),
+                                now.strftime('%H:%M:%S'),
+                                form.from_currency.data,
+                                form.from_quantity.data,
+                                form.to_currency.data,
+                                form.to_quantity.data,
+                            ))    
+                            
+                            return redirect(url_for('movements'))
+                        except Exception as e:
+                            print('**ERROR**: Acceso a base de datos - inserción de movimientos: {} {}'.format(type(e).__name__, e))
+                            mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
+                            return render_template('500.html', mensajes=mensajes)
+                else:
+                    return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
+
+            except Exception as e: 
+                return render_template('500.html', mensajes=mensajes)
 
     return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
 
@@ -136,6 +135,9 @@ def status():
 
     the_real_value = the_inv + the_bal + the_val
 
-
-    
     return render_template('status.html', total_invested=f'{the_inv:.2f} €', actual_value=f'{the_real_value:.2f} €', mensajes=mensajes)
+
+@application.route('/500')
+def error500():
+    mensajes = []
+    return render_template('500.html', mensajes=mensajes)

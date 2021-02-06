@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}No llevará{% endblock %}
+
+{% block content %}
+<section class="column is-full">
+    {% for mensaje in mensajes %}
+        <p class="err-msg">{{ mensaje }}</p>
+    {% endfor %}
+</section>
+{% endblock %}

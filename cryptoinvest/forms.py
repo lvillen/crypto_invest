@@ -7,8 +7,9 @@ def actual_cryptos():
     #Gestionar aquí
     try:
         actual_wallet = wallet()
-    except:
-        return (1, 'EUR')
+    except Exception as e:
+        print('**ERROR**: Acceso a base de datos - imposible realizar la consulta "wallet": {} {}'.format(type(e).__name__, e))
+        return ((1, 'EUR'))
     
     result = []
     result.append(('1', 'EUR'))
@@ -22,8 +23,9 @@ def available_cryptos(form, field):
     #Gestionar aquí
     try:
         available_cr = wallet()
-    except:
-        pass 
+    except Exception as e:
+        print('**ERROR**: Acceso a base de datos - imposible realizar la consulta "wallet": {} {}'.format(type(e).__name__, e))
+        raise ValidationError('No fue posible calcular el saldo debido a un error en la base de datos.')
     
     currency = form.from_currency.data
 
