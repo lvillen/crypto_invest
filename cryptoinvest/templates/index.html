@@ -2,13 +2,22 @@
 
 {% block title %}{% endblock %}
 
+{% block menu %}
+    <nav class="navbar">
+        <div class="navbar-list">
+        <ul>
+            <li class="home">Inicio</li>
+            <li class="compra"><a href="/purchase">Compra</a></li>
+            <li class="estado"><a href="/status">Estado</a></li>
+        </ul>
+        </div>
+        <ul>
+            <li>CryptoInvest</li>
+        </ul>
+    </nav>
+{% endblock%}
+
 {% block content %}
-<header class="header">
-    <hgroup>
-        <h2>CryptoInvest:</h2>
-        <h3>Vea sus movimientos</h3>
-    <hgroup>
-</header>
 <section class="section">
     {% for mensaje in mensajes %}
         <p class="error-style-inpage">{{ mensaje }}</p>

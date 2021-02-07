@@ -11,20 +11,15 @@
 </head>
 <body>
     <div class="container">
-        <nav class="navbar">
-            <div class="navbar-list">
-            <ul>
-                <li class="home"><a href="/">Inicio</a></li>
-                <li class="compra"><a href="/purchase">Compra</a></li>
-                <li class="estado"><a href="/status">Estado</a></li>
-            </ul>
-            </div>
-            <ul>
-                <li>CryptoInvest</li>
-            </ul>
-        </nav>
+        {% block menu %}{% endblock %}
         <main class="main">
-                {% block content %}{% endblock %}
+            <header class="header">
+                <hgroup>
+                    <h2>CryptoInvest:</h2>
+                    <h3>{{ header }}</h3>
+                <hgroup>
+            </header>
+        {% block content %}{% endblock %}
         </main>
         <footer class="pie">
             &copy; 2021 - Luis Villén

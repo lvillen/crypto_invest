@@ -15,6 +15,7 @@ def pagina_no_encontrado(error):
 
 @application.route('/')
 def movements():
+    header = "Vea sus movimientos"
     mensajes = []
     
     try:
@@ -24,11 +25,12 @@ def movements():
         mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
         return render_template('index.html', mensajes=mensajes)
 
-    return render_template('index.html', datos=datos, mensajes=mensajes)
+    return render_template('index.html', header=header, datos=datos, mensajes=mensajes)
 
 
 @application.route('/purchase', methods=['GET', 'POST'])
 def purchase():
+    header = "Adquiera cryptomonedas"
     mensajes = []
     
     try: 
@@ -82,10 +84,10 @@ def purchase():
                 
                 calculate = True
 
-                return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
+                return render_template('purchase.html', header=header, form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
             
             else: 
-                return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
+                return render_template('purchase.html', header=header, form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
 
 
         if form.submit.data:
@@ -110,11 +112,12 @@ def purchase():
             else:
                 return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
 
-    return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
+    return render_template('purchase.html', header=header, form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
 
 
 @application.route('/status')
 def status():
+    header = "Compruebe el estado de sus inversiones"
     mensajes = []
 
     try:
@@ -124,7 +127,7 @@ def status():
     except Exception as e:
         print('**ERROR**: Acceso a base de datos - cálculo de € gastados: {} {}'.format(type(e).__name__, e))
         mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
-        return render_template('status.html', total_invested='No se pudo mostrar', actual_value='No se pudo mostrar', mensajes=mensajes)
+        return render_template('status.html', header=header, total_invested='No se pudo mostrar', actual_value='No se pudo mostrar', mensajes=mensajes)
 
     try:    
         the_bal = euros_balance()
@@ -133,7 +136,7 @@ def status():
     except Exception as e:
         print('**ERROR**: Acceso a base de datos - balance de € invertidos: {} {}'.format(type(e).__name__, e))
         mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
-        return render_template('status.html', total_invested='No se pudo mostrar', actual_value='No se pudo mostrar', mensajes=mensajes)
+        return render_template('status.html', header=header, total_invested='No se pudo mostrar', actual_value='No se pudo mostrar', mensajes=mensajes)
 
     try:
         the_val = actual_value()
@@ -142,11 +145,11 @@ def status():
     except Exception as e:
         print('**ERROR**: Acceso a API - consulta de conversion: {} {}'.format(type(e).__name__, e))
         mensajes.append('Error en el acceso a la API. Consulte con el administrador.')
-        return render_template('status.html', total_invested='No se pudo mostrar', actual_value='No se pudo mostrar', mensajes=mensajes)        
+        return render_template('status.html', header=header, total_invested='No se pudo mostrar', actual_value='No se pudo mostrar', mensajes=mensajes)        
 
     the_real_value = the_inv + the_bal + the_val
 
-    return render_template('status.html', total_invested=f'{the_inv:.2f} €', actual_value=f'{the_real_value:.2f} €', mensajes=mensajes)
+    return render_template('status.html', header=header, total_invested=f'{the_inv:.2f} €', actual_value=f'{the_real_value:.2f} €', mensajes=mensajes)
 
 @application.route('/500')
 def error500():
