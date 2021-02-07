@@ -83,12 +83,13 @@
                     <div class="level-item">
                         {% if calculate == False %} 
                         {% else %}
-                            {{ form.submit(class="button")}}
+                        {{ form.submit.label(class="oculto")}}
+                        {{ form.submit(class="button")}}
                         {% endif %}
                     </div>
                     <div class="level-item">
                         {% if calculate == False %} 
-                        {% else %}                        
+                        {% else %}                       
                         <form action="/purchase">
                             <input type="submit" value="Reset"/>
                         </form>                  

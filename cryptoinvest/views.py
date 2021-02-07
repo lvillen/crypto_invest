@@ -42,40 +42,39 @@ def purchase():
 
     if request.method == 'POST':
         if form.calculate.data:
-            try: 
-                if form.validate():
-                    try:
-                        from_currency = get_crypto(form.from_currency.data) 
-                        to_currency = get_crypto(form.to_currency.data)
-                    except Exception as e:
-                        print('**ERROR**: Acceso a base de datos - relación crypto_id con crypto_name: {} {}'.format(type(e).__name__, e))
-                        mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
-                        return render_template('500.html', mensajes=mensajes)
+            if form.validate():
+                try:
+                    from_currency = get_crypto(form.from_currency.data) 
+                    to_currency = get_crypto(form.to_currency.data)
+                except Exception as e:
+                    print('**ERROR**: Acceso a base de datos - relación crypto_id con crypto_name: {} {}'.format(type(e).__name__, e))
+                    mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
+                    return render_template('500.html', mensajes=mensajes)
 
-                    try:
-                        to_quantity = round(conversion(form.from_quantity.data, from_currency, to_currency), 8)
-                    except Exception as e:
-                        print('**ERROR**: Acceso a API - Error 400: {} {}'.format(type(e).__name__, e))
-                        mensajes.append('Error 400 en el acceso a la API. Sentimos informarle que su petición no pudo realizarse. Consulte con el administrador.')
-                        return render_template('400.html', mensajes=mensajes)
+                try:
+                    to_quantity = round(conversion(form.from_quantity.data, from_currency, to_currency), 8)
+                except Exception as e:
+                    print('**ERROR**: Acceso a API - Error 400: {} {}'.format(type(e).__name__, e))
+                    mensajes.append('Error 400 en el acceso a la API. Sentimos informarle que su petición no pudo realizarse. Consulte con el administrador.')
+                    return render_template('400.html', mensajes=mensajes)
 
-                    try:
-                        price_unit = round((float(form.from_quantity.data) / to_quantity), 8)
-                    except ZeroDivisionError as e:
-                        print('**ERROR**: Divisón no disponible: {} {}'.format(type(e).__name__, e))
-                        mensajes.append('No se pudo acceder al recurso, sentimos las molestias. Inténtelo de nuevo accedienco a "compra" en el link superior realizando una operación cuya división no resulte en 0.')
-                        return render_template('404.html', mensajes=mensajes)
-                    
-                    calculate = True
+                try:
+                    price_unit = round((float(form.from_quantity.data) / to_quantity), 8)
+                except ZeroDivisionError as e:
+                    print('**ERROR**: Divisón no disponible: {} {}'.format(type(e).__name__, e))
+                    mensajes.append('No se pudo acceder al recurso, sentimos las molestias. Inténtelo de nuevo accedienco a "compra" en el link superior realizando una operación cuya división no resulte en 0.')
+                    return render_template('404.html', mensajes=mensajes)
+                
+                calculate = True
 
-                    return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
+                return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
             
-            except Exception as e: 
-                return render_template('500.html', mensajes=mensajes)
+            else: 
+                return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
+
 
         if form.submit.data:
-            try:
-                if form.validate():
+            if form.validate():
                     if form.from_currency.data != form.to_currency.data:
                         try:
                             consulta('INSERT INTO movements (date, time, from_currency, from_quantity, to_currency, to_quantity) VALUES (?, ?, ?, ?, ?, ?);',
@@ -93,11 +92,8 @@ def purchase():
                             print('**ERROR**: Acceso a base de datos - inserción de movimientos: {} {}'.format(type(e).__name__, e))
                             mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
                             return render_template('500.html', mensajes=mensajes)
-                else:
-                    return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
-
-            except Exception as e: 
-                return render_template('500.html', mensajes=mensajes)
+            else:
+                return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
 
     return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
 

@@ -24,3 +24,7 @@
 .num-inv {
     font-size: 2rem;
 }
+
+.oculto {
+    visibility: hidden;
+}
