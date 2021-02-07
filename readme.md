@@ -46,4 +46,8 @@ Suponiendo que tiene python y los módulos sqlite3 y venv instalados en su orden
 
 ## Ejecución:
 
-- En el terminal, vuelva a la carpeta raíz y ejecute python application.py
+- En el terminal, vuelva a la carpeta raíz y ejecute: 
+
+```
+python application.py
+```
