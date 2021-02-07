@@ -55,16 +55,16 @@ def purchase():
                     try:
                         to_quantity = round(conversion(form.from_quantity.data, from_currency, to_currency), 8)
                     except Exception as e:
-                        print('**ERROR**: Acceso a API - consulta de conversion: {} {}'.format(type(e).__name__, e))
-                        mensajes.append('Error en el acceso a la API. Consulte con el administrador.')
-                        return render_template('500.html', mensajes=mensajes)
+                        print('**ERROR**: Acceso a API - Error 400: {} {}'.format(type(e).__name__, e))
+                        mensajes.append('Error 400 en el acceso a la API. Sentimos informarle que su petición no pudo realizarse. Consulte con el administrador.')
+                        return render_template('400.html', mensajes=mensajes)
 
                     try:
                         price_unit = round((float(form.from_quantity.data) / to_quantity), 8)
                     except ZeroDivisionError as e:
                         print('**ERROR**: Divisón no disponible: {} {}'.format(type(e).__name__, e))
-                        mensajes.append('Sentimos mucho decirle que la operación que deseaba realizar no ha podido completarse, vuelva al formulario en el link superior.')
-                        return render_template('500.html', mensajes=mensajes)
+                        mensajes.append('No se pudo acceder al recurso, sentimos las molestias. Inténtelo de nuevo accedienco a "compra" en el link superior realizando una operación cuya división no resulte en 0.')
+                        return render_template('404.html', mensajes=mensajes)
                     
                     calculate = True
 
@@ -141,3 +141,13 @@ def status():
 def error500():
     mensajes = []
     return render_template('500.html', mensajes=mensajes)
+
+@application.route('/400')
+def error400():
+    mensajes = []
+    return render_template('400.html', mensajes=mensajes)
+
+@application.route('/404')
+def error404():
+    mensajes = []
+    return render_template('404.html', mensajes=mensajes)

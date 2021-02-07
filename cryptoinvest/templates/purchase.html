@@ -12,7 +12,7 @@
         <hgroup>
     </header>
     {% for mensaje in mensajes %}
-        <p class="err-msg" style="color: #e63946;">{{ mensaje }}</p>
+        <p class="error-style-inpage">{{ mensaje }}</p>
         <br>
     {% endfor %}
 <form action="/purchase" method="post" class="">
@@ -34,7 +34,7 @@
                     {{ form.from_quantity (class="input")}}
                         {% if form.from_quantity.errors %}
                             {% for msg in form.from_quantity.errors %}
-                                <p class="err-msg" style="color: #e63946;">
+                                <p class="error-style-inpage">
                                     {{msg}}
                                 </p>
                             {% endfor %}
@@ -49,7 +49,7 @@
                     {{ form.to_currency(class="select")}}
                         {% if form.to_currency.errors %}
                             {% for msg in form.to_currency.errors %}
-                                <p class="err-msg" style="color: #e63946;">
+                                <p class="error-style-inpage">
                                     {{msg}}
                                 </p>
                             {% endfor %}

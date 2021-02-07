@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
 
-{% block title %}No llevará{% endblock %}
+{% block title %}Error 400{% endblock %}
 
 {% block content %}
-<section class="column is-full">
+<section class="section">
+    <br>
+    <h1 class="error-code">
+        <span>4</span>
+        <span>0</span>
+        <span>0</span>
+        <span>!</span>
+    </h1>
     {% for mensaje in mensajes %}
-        <p class="err-msg">{{ mensaje }}</p>
+        <p class="error-style">{{ mensaje }}</p>
     {% endfor %}
 </section>
 {% endblock %}

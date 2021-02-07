@@ -3,6 +3,24 @@
     color: #e63946;
 }
 
+.error-style-inpage {
+    color: #e63946;
+}
+
 .pie {
     padding-bottom: 5%;
+}
+
+.empty {
+    font-size: 1.5rem;
+}
+
+.inv {
+    font-size: 1.3rem;
+    font-weight: 300;
+    margin-bottom: 0.2%;
+}
+
+.num-inv {
+    font-size: 2rem;
 }

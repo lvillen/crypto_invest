@@ -9,15 +9,15 @@
         <h3>Compruebe el estado de sus inversiones</h3>
     <hgroup>
 </header>
-<section class="column is-full">
+<section class="section">
     {% for mensaje in mensajes %}
-        <p class="err-msg">{{ mensaje }}</p>
+        <p class="error-style-inpage">{{ mensaje }}</p>
     {% endfor %}
     <div class="content">
-        <h2>Invertido</h2>
-        <p style="font-size: 3rem;">{{ total_invested }}</p>
-        <h2>Valor actual</h2>
-        <p style="font-size: 3rem;">{{ actual_value }}</p>
+        <p class="inv">Invertido</p>
+        <p class="num-inv">{{ total_invested }}</p>
+        <p class="inv">Valor actual</p>
+        <p class="num-inv">{{ actual_value }}</p>
     </div>  
 </section>
 {% endblock %}
