@@ -1,24 +1,47 @@
-Pasos a seguir:
+# Instalación
 
-0. Activar el entorno virtual
-1. Crear base de datos ejecutando initdb.py
-2. Desplegar la aplicación ejecutando el comando 'Flask run', declarando la variable API_KEY previamente vía terminal:
-    ```
-    API_KEY=la_api_key Flask run
-    ```
+## Instalación de dependencias:
 
-3. Blablabla
+Suponiendo que tiene sqlite3 y python instalado en su ordenador:
 
+- Si quisiera, cree un entorno virtual:
+```
+python -m venv venv
+```
 
+- En caso de haber creado el entorno virtual, acceda a él:
+    + Windows: venv\Scripts\activate
+    + Mac y Linux: . venv/bin/activate
 
--- Consejos --
+- En caso de haber creado el entorno virtual, en el archivo '.env' definir las siguientes variables:
+    + FLASK_APP=application.py
+    + FLASK_ENV=development
 
-Dividir en unidades muy pequeñitas. 
-Termino una unidad, paso a la siguiente. 
-En esa unidad, paso a paso.
+- Ejecutar:
+```
+pip install -r requirements.txt
+```
 
-Si puedo falsear un módulo, lo hago, y luego lo monto cuando pueda.
+## Obtención API coinmarketcap:
 
-¿Montar un Trello? 
+- Diríjase a https://coinmarketcap.com/api/
+- Obtenga su API Key
 
-Posibilidad = Pasar la API_KEY como variable de entorno
+## Creación de la Base de datos:
+
+- En el terminal, acceda a la carpeta data
+- Ejecutar:
+```
+python initdb.py
+```
+
+## Fichero de configuración:
+
+- Renombre su config_template.py como config.py.
+- Introduzca una clave secreta.
+- Introduzca la API KEY obtenida.
+- Introduzca la ruta a la base de datos.
+
+## Ejecución:
+
+- Ejecute python application.py
