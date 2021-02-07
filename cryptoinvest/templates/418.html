@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Error 418{% endblock %}
+
+{% block content %}
+<section class="section">
+    <br>
+    <h1 class="error-code">
+        <span>4</span>
+        <span>1</span>
+        <span>8</span>
+        <span>!</span>
+    </h1>
+    {% for mensaje in mensajes %}
+        <p class="error-style">{{ mensaje }}</p>
+    {% endfor %}
+</section>
+{% endblock %}

@@ -9,6 +9,10 @@ from cryptoinvest.coinmarketcap_api.api_functions import *
 
 DBFILE = application.config['DBFILE']
 
+@application.errorhandler(404)
+def pagina_no_encontrado(error):
+    return render_template('404.html'), 404
+
 @application.route('/')
 def movements():
     mensajes = []
@@ -73,8 +77,8 @@ def purchase():
                     price_unit = round((float(form.from_quantity.data) / to_quantity), 8)
                 except ZeroDivisionError as e:
                     print('**ERROR**: Divisón no disponible: {} {}'.format(type(e).__name__, e))
-                    mensajes.append('No se pudo acceder al recurso, sentimos las molestias. Inténtelo de nuevo accedienco a "compra" en el link superior realizando una operación cuya división no resulte en 0.')
-                    return render_template('404.html', mensajes=mensajes)
+                    mensajes.append('No podemos hacer café con una tetera. Por favor, realice una división que no divida entre 0.')
+                    return render_template('418.html', mensajes=mensajes)
                 
                 calculate = True
 
@@ -151,7 +155,7 @@ def error400():
     mensajes = []
     return render_template('400.html', mensajes=mensajes)
 
-@application.route('/404')
-def error404():
+@application.route('/418')
+def error418():
     mensajes = []
-    return render_template('404.html', mensajes=mensajes)
+    return render_template('418.html', mensajes=mensajes)

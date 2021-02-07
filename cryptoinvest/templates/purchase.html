@@ -78,16 +78,16 @@
                     {{ form.price_unit(class="input", value=price_unit)}}
                 {% endif %}
             </div>
-            <div class="level">
-                <div class="level-left">
-                    <div class="level-item">
+            <div class="field">
+                <div class="field">
+                    <div class="field">
                         {% if calculate == False %} 
                         {% else %}
                         {{ form.submit.label(class="oculto")}}
                         {{ form.submit(class="button")}}
                         {% endif %}
                     </div>
-                    <div class="level-item">
+                    <div class="field">
                         {% if calculate == False %} 
                         {% else %}                       
                         <form action="/purchase">
