@@ -31,9 +31,9 @@ def purchase():
         form = PurchaseForm()
         form.from_currency.choices = actual_cryptos()
     except Exception as e:
-                    print('**ERROR**: Acceso a base de datos en la creación del formulario no disponible: {} {}'.format(type(e).__name__, e))
-                    mensajes.append('Debido a un error en el acceso a la base de datos no se pudo crear esta página. Sentimos las molestias.')
-                    return render_template('500.html', mensajes=mensajes)
+        print('**ERROR**: Acceso a base de datos en la creación del formulario no disponible: {} {}'.format(type(e).__name__, e))
+            
+        return render_template('500.html', mensajes=mensajes)
     
     to_quantity = ""
     price_unit = ""
@@ -122,9 +122,6 @@ def status():
         print('**ERROR**: Acceso a API - consulta de conversion: {} {}'.format(type(e).__name__, e))
         mensajes.append('Error en el acceso a la API. Consulte con el administrador.')
         return render_template('status.html', total_invested='No se pudo mostrar', actual_value='No se pudo mostrar', mensajes=mensajes)        
-        
-        #Aquí puede petar por dos lados
-        #La API ha fallado con un error 429
 
         print('Error the_val')
         pass

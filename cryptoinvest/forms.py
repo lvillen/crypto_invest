@@ -4,7 +4,6 @@ from wtforms.validators import DataRequired, ValidationError, NumberRange
 from cryptoinvest.data.cryptos import *
 
 def actual_cryptos():
-    #Gestionar aquí
     try:
         actual_wallet = wallet()
     except Exception as e:
@@ -20,12 +19,11 @@ def actual_cryptos():
     return result
 
 def available_cryptos(form, field):
-    #Gestionar aquí
     try:
         available_cr = wallet()
     except Exception as e:
         print('**ERROR**: Acceso a base de datos - imposible realizar la consulta "wallet": {} {}'.format(type(e).__name__, e))
-        raise ValidationError('Debido a un problema con la base de datos, es imposible consultar su saldo.')
+        return e
 
     currency = form.from_currency.data
 
