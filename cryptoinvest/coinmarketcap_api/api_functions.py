@@ -2,8 +2,7 @@ import requests, json, os
 from cryptoinvest import application
 
 base_url = 'https://pro-api.coinmarketcap.com'
-#api_key = os.environ['API_KEY']
-api_key = application.config['API_KEY'] #No puedo lanzar el config sin estar lanzado el Flask run
+api_key = application.config['API_KEY']
 
 def listing():
     url = f'{base_url}/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY={api_key}'
@@ -28,10 +27,7 @@ def conversion(from_quantity, from_currency, to_currency):
         data = response.json()
         return float(data['data']['quote'][to_currency]['price'])
     else:
-        print("La API ha fallado con un error", response.status_code)
-    
-    #Controlar errores 400 / 401 / etc.
-            
+        print("La API ha fallado con un error", response.status_code)            
 
 if __name__ == '__main__':
     conversion(1000, 'BTC', 'ETH')
