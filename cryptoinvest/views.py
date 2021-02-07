@@ -23,7 +23,7 @@ def movements():
     except Exception as e:
         print('**ERROR**: Error en la base de datos - no se puedo realizar el acceso a la tabla "movements": {} {}'.format(type(e).__name__, e))
         mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
-        return render_template('index.html', mensajes=mensajes)
+        return render_template('index.html', header=header, mensajes=mensajes)
 
     return render_template('index.html', header=header, datos=datos, mensajes=mensajes)
 
@@ -38,19 +38,19 @@ def purchase():
     except Exception as e:
         print('**ERROR**: Acceso a base de datos en la creación del formulario no disponible: {} {}'.format(type(e).__name__, e))
         mensajes.append(actual_cryptos())
-        return render_template('500.html', mensajes=mensajes)
+        return render_template('500.html', header=header, mensajes=mensajes)
 
     try:
         if isinstance(actual_cryptos(), str):
             print('**ERROR**: Acceso a base de datos en la creación del formulario no disponible: {} {}'.format(type(e).__name__, e))
             mensajes.append(actual_cryptos())
-            return render_template('500.html', mensajes=mensajes)
+            return render_template('500.html', header=header, mensajes=mensajes)
         else:
             form.from_currency.choices = actual_cryptos()
     except Exception as e:
         print('**ERROR**: Acceso a base de datos en la creación del formulario no disponible: {} {}'.format(type(e).__name__, e))
         mensajes.append(actual_cryptos())
-        return render_template('500.html', mensajes=mensajes)
+        return render_template('500.html', header=header, mensajes=mensajes)
 
     to_quantity = ""
     price_unit = ""
@@ -66,21 +66,21 @@ def purchase():
                 except Exception as e:
                     print('**ERROR**: Acceso a base de datos - relación crypto_id con crypto_name: {} {}'.format(type(e).__name__, e))
                     mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
-                    return render_template('500.html', mensajes=mensajes)
+                    return render_template('500.html', header=header, mensajes=mensajes)
 
                 try:
                     to_quantity = round(conversion(form.from_quantity.data, from_currency, to_currency), 8)
                 except Exception as e:
                     print('**ERROR**: Acceso a API - Error 400: {} {}'.format(type(e).__name__, e))
                     mensajes.append('Error 400 en el acceso a la API. Sentimos informarle que su petición no pudo realizarse. Consulte con el administrador.')
-                    return render_template('400.html', mensajes=mensajes)
+                    return render_template('400.html', header=header, mensajes=mensajes)
 
                 try:
                     price_unit = round((float(form.from_quantity.data) / to_quantity), 8)
                 except ZeroDivisionError as e:
                     print('**ERROR**: Divisón no disponible: {} {}'.format(type(e).__name__, e))
                     mensajes.append('No podemos hacer café con una tetera. Por favor, realice una división que no divida entre 0.')
-                    return render_template('418.html', mensajes=mensajes)
+                    return render_template('418.html', header=header, mensajes=mensajes)
                 
                 calculate = True
 
@@ -108,9 +108,9 @@ def purchase():
                         except Exception as e:
                             print('**ERROR**: Acceso a base de datos - inserción de movimientos: {} {}'.format(type(e).__name__, e))
                             mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
-                            return render_template('500.html', mensajes=mensajes)
+                            return render_template('500.html', header=header, mensajes=mensajes)
             else:
-                return render_template('purchase.html', form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
+                return render_template('purchase.html', header=header, form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
 
     return render_template('purchase.html', header=header, form=form, to_quantity=to_quantity, price_unit=price_unit, calculate=calculate, mensajes=mensajes)
 
