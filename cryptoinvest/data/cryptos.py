@@ -1,11 +1,7 @@
 from cryptoinvest.data.consulta import consulta
 
 def cryptos():
-    try:
-        cryptos = consulta('SELECT crypto_id, crypto FROM cryptos;')
-    except Exception as e:
-        print('**ERROR**: Acceso a base de datos - imposible acceder a la tabla cryptos: {} {}'.format(type(e).__name__, e))
-        cryptos = [(1, "EUR"), (2, "ETH"), (3, "LTC"), (4, "BNB"), (5, "EOS"), (6, "XLM"), (7, "TRX"), (8, "BTC"), (9, "XRP"), (10, "BCH"), (11, "USDT"), (12, "BSV"), (13, "ADA")]
+    cryptos = consulta('SELECT crypto_id, crypto FROM cryptos;')
     
     result = []
 

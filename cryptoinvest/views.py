@@ -29,12 +29,23 @@ def purchase():
     
     try: 
         form = PurchaseForm()
-        form.from_currency.choices = actual_cryptos()
     except Exception as e:
         print('**ERROR**: Acceso a base de datos en la creación del formulario no disponible: {} {}'.format(type(e).__name__, e))
-            
+        mensajes.append(actual_cryptos())
         return render_template('500.html', mensajes=mensajes)
-    
+
+    try:
+        if isinstance(actual_cryptos(), str):
+            print('**ERROR**: Acceso a base de datos en la creación del formulario no disponible: {} {}'.format(type(e).__name__, e))
+            mensajes.append(actual_cryptos())
+            return render_template('500.html', mensajes=mensajes)
+        else:
+            form.from_currency.choices = actual_cryptos()
+    except Exception as e:
+        print('**ERROR**: Acceso a base de datos en la creación del formulario no disponible: {} {}'.format(type(e).__name__, e))
+        mensajes.append(actual_cryptos())
+        return render_template('500.html', mensajes=mensajes)
+
     to_quantity = ""
     price_unit = ""
     now = datetime.now()
