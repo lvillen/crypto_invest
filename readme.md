@@ -1,26 +1,28 @@
 # Instalación
 
+En esta guía asumimos que las llamadas a python en terminal se hacen como 'python'. En caso de que python3 no este renombrado como python, tenga en cuenta que tendrá que hacerlo como 'python3'
+
 ## Instalación de dependencias:
 
-Suponiendo que tiene sqlite3 y python instalado en su ordenador:
+Suponiendo que tiene python y los módulos sqlite3 y venv instalados en su ordenador:
 
-- Si quisiera, cree un entorno virtual:
-```
-python -m venv venv
-```
+- Si quisiera, cree un entorno virtual, acceda al terminal e introduzca:
+    ```
+    python -m venv venv
+    ```
 
-- En caso de haber creado el entorno virtual, acceda a él:
+- En caso de haber creado el entorno virtual, acceda a él vía terminal:
     + Windows: venv\Scripts\activate
     + Mac y Linux: . venv/bin/activate
 
-- En caso de haber creado el entorno virtual, en el archivo '.env' definir las siguientes variables:
+- En caso de haber creado el entorno virtual, cree, a nivel raíz, el archivo '.env' y defina las siguientes variables:
     + FLASK_APP=application.py
     + FLASK_ENV=development
 
-- Ejecutar:
-```
-pip install -r requirements.txt
-```
+- Ejecutar en el terminal:
+    ```
+    pip install -r requirements.txt
+    ```
 
 ## Obtención API coinmarketcap:
 
@@ -29,11 +31,11 @@ pip install -r requirements.txt
 
 ## Creación de la Base de datos:
 
-- En el terminal, acceda a la carpeta data
+- En el terminal, acceda a la carpeta data.
 - Ejecutar:
-```
-python initdb.py
-```
+    ```
+    python initdb.py
+    ```
 
 ## Fichero de configuración:
 
@@ -44,4 +46,4 @@ python initdb.py
 
 ## Ejecución:
 
-- Ejecute python application.py
+- En el terminal, vuelva a la carpeta raíz y ejecute python application.py
