@@ -119,6 +119,8 @@ def status():
 
     try:
         the_inv = total_invested()
+        if the_inv == None:
+            the_inv = 0
     except Exception as e:
         print('**ERROR**: Acceso a base de datos - cálculo de € gastados: {} {}'.format(type(e).__name__, e))
         mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
@@ -126,6 +128,8 @@ def status():
 
     try:    
         the_bal = euros_balance()
+        if the_bal == None:
+            the_bal = 0
     except Exception as e:
         print('**ERROR**: Acceso a base de datos - balance de € invertidos: {} {}'.format(type(e).__name__, e))
         mensajes.append('Error en el acceso a base de datos. Consulte con el administrador.')
@@ -133,13 +137,12 @@ def status():
 
     try:
         the_val = actual_value()
+        if the_val == None:
+            the_val = 0
     except Exception as e:
         print('**ERROR**: Acceso a API - consulta de conversion: {} {}'.format(type(e).__name__, e))
         mensajes.append('Error en el acceso a la API. Consulte con el administrador.')
         return render_template('status.html', total_invested='No se pudo mostrar', actual_value='No se pudo mostrar', mensajes=mensajes)        
-
-        print('Error the_val')
-        pass
 
     the_real_value = the_inv + the_bal + the_val
 

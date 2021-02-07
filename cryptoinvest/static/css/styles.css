@@ -1,3 +1,8 @@
+.the_home nav .home > a {
+    pointer-events: none;
+    cursor: default;
+}
+
 .error-style {
     font-size: 2rem;
     color: #e63946;
